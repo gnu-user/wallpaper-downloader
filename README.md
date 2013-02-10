@@ -8,7 +8,7 @@ Description
 --------------
 
 The wallpaper downloader is simple Python script I made a number of years ago when I was working on
-family member's computers and realized that the following is a universal axiom of repairing family 
+family member's computers and realized that the following is a universal law of repairing family 
 and friend's computers.
 
   ```
