@@ -5,7 +5,7 @@
 #  A simple Python script which downloads wallpapers from websites that have 
 #  nice wallpapers. Currently the only website supported is interfacelift.com
 #
-#  TODO: Implement the equivalent for DeviantArt!!!
+#  TODO: Implement the equivalent for DeviantArt and OTHERWEBSITES
 #
 #
 #  Copyright (C) 2013, Jonathan Gillett
