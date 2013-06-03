@@ -10,13 +10,16 @@
     <!-- Le styles -->
     <link href="./css/bootstrap.css" rel="stylesheet">
     <link href="./css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico">
     <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
+body {
 
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-image: url(img/bgimg3.jpg);
+  background-repeat: no-repeat;
+  background-position:center;
+}
       /* Custom container */
       .container-narrow {
         margin: 0 auto;
@@ -56,12 +59,15 @@
       background-size:100%;
       background-position:center;
     }
+    body,td,th {
+	color: #000000;
+}
     </style>
 
     <!-- LE CONTENT STARTS HERE -->
     </style></head>
 
-<body background="http://interfacelift.com/wallpaper/D47cd523/03249_godscottage_1680x1050.jpg">
+<body>
     <div class="container-narrow">
       <div class="jumbotron">
         <h1>Bulk Wallpaper Downloader</h1>
@@ -75,55 +81,34 @@
           <h4>Please select a resolution and quanity.</h4>
           <select class="select">
                <option value="">Select Resolution</option>
-                <optgroup label="Apple Devices">
-               <option id="res_2048x2048_1" value="2048x2048">new iPad (3rd Gen)</option>
+                <optgroup label="Apple Products">
+                <option id="res_2880x1800_1" value="2880x1800">2880x1800 - Retina Display</option>
+               <option id="res_2048x2048_1" value="2048x2048">iPad (3rd Gen)</option>
                <option id="res_1024x1024_1" value="1024x1024">iPad and iPad 2</option>
                <option id="res_640x1136_1" value="640x1136">iPhone 5</option>
                <option id="res_640x960_1" value="640x960">iPhone 4/4S</option>
                <option id="res_320x480_1" value="320x480">iPhone/3G/3GS</option>
                 </optgroup>
-                <optgroup label="Blackberry">
-               <option id="res_360x480_1" value="360x480">360x480</option>
-               <option id="res_320x240_1" value="320x240">320x240</option>
-                </optgroup>
-                <optgroup label="Dual Monitors">
-                  <option id="res_2560x1024_1" value="2560x1024">Dual 1280x1024</option>
-                </optgroup>
-                <optgroup label="Fullscreen 4:3">
-               <option id="res_1600x1200_1" value="1600x1200">1600x1200</option>
-               <option id="res_1400x1050_1" value="1400x1050">1400x1050</option>
-               <option id="res_1280x960_1" value="1280x960">1280x960</option>
-               <option id="res_1024x768_1" value="1024x768">1024x768</option>
-                </optgroup>
-                <optgroup label="Fullscreen 5:4">
-                  <option id="res_1280x1024_1" value="1280x1024">1280x1024</option>
-                </optgroup>
-                <optgroup label="Google Android">
-               <option id="res_2160x1920_1" value="2160x1920">1080x1920 Phone</option>
+                <optgroup label="Android Products">
+               <option id="res_2160x1920_1" value="2160x1920">1080x1920 Tablet</option>
                <option id="res_1920x1408_1" value="1920x1408">1280x800 Tablet</option>
                <option id="res_1440x1280_1" value="1440x1280">720x1280 Phone</option>
                <option id="res_1080x960_1" value="1080x960">540x960 Phone</option>
                <option id="res_960x854_1" value="960x854">480x854 Phone</option>
                <option id="res_960x800_1" value="960x800">480x800 Phone</option>
                <option id="res_640x480_1" value="640x480">320x480 Phone</option>
-               <option id="res_600x1024_1" value="600x1024">Amazon Kindle Fire</option>
+               <option id="res_600x1024_1" value="600x1024"> 600x1024 Kindle Fire</option>
                 </optgroup>
-                <optgroup label="Netbook">
+                <optgroup label="Netbooks & Small Screens">
                <option id="res_1366x768_1" value="1366x768">1366x768</option>
                <option id="res_1024x600_1" value="1024x600">1024x600</option>
                <option id="res_800x480_1" value="800x480">800x480</option>
-                </optgroup>
-                <optgroup label="Other">
-               <option id="res_960x544_1" value="960x544">Sony PlayStation Vita</option>
-               <option id="res_480x272_1" value="480x272">Sony PSP</option>
-               <option id="res_320x400_1" value="320x400">Palm Pixi, HP Veer</option>
                 </optgroup>
                 <optgroup label="Widescreen">
                   <option id="res_2560x1080_1" value="2560x1080">2560x1080</option>
                 </optgroup>
                 <optgroup label="Widescreen 16:10">
                <option id="res_3840x2400_1" value="3840x2400">3840x2400</option>
-               <option id="res_2880x1800_1" value="2880x1800">2880x1800 - Retina MacBook Pro</option>
                <option id="res_2560x1600_1" value="2560x1600">2560x1600</option>
                <option id="res_1920x1200_1" value="1920x1200">1920x1200</option>
                <option id="res_1680x1050_1" value="1680x1050">1680x1050</option>
@@ -137,13 +122,17 @@
                <option id="res_2560x1440_1" value="2560x1440">2560x1440</option>
                <option id="res_1920x1080_1" value="1920x1080">1920x1080 (1080p HDTV)</option>
                <option id="res_1600x900_1" value="1600x900">1600x900</option>
-               <option id="res_1280x720_1" value="1280x720">1280x720 (720p HDTV)</option>
+               <option id="res_1280x720_1" value="1280x720">1280x720</option>
                 </optgroup>
-                <optgroup label="Windows Phone 7/8">
-               <option id="res_768x1280_1" value="768x1280">768x1280 - Windows Phone 8</option>
-               <option id="res_720x1280_1" value="720x1280">720x1280 - Windows Phone 8</option>
-               <option id="res_480x800_1" value="480x800">480x800 - Windows Phone 7/8</option>
-              </optgroup>
+                <optgroup label="Fullscreen 5:4">
+                  <option id="res_1280x1024_1" value="1280x1024">1280x1024</option>
+                </optgroup>
+                <optgroup label="Fullscreen 4:3">
+               <option id="res_1600x1200_1" value="1600x1200">1600x1200</option>
+               <option id="res_1400x1050_1" value="1400x1050">1400x1050</option>
+               <option id="res_1280x960_1" value="1280x960">1280x960</option>
+               <option id="res_1024x768_1" value="1024x768">1024x768</option>
+                </optgroup>
             </select>
             <select>
               <option value="">Select Quanity</option>
@@ -159,7 +148,8 @@
                 <center><button class="btn btn-large btn-success" href="#">Download</button></center>
                 <hr>
                 <a class="btn btn-info" href="#myModal" data-toggle="modal">About Site</a>
-                <p></p>
+                <hr>
+                <p>Like the background we used? <a href="img/bgimg3.jpg" target="_blank">Right click and "Save Link As"</a></p>
                 <p>© 2013 Two Guys With Spare Time</p>
               </div>
           </center>
@@ -185,6 +175,8 @@
       <h4>Can I See The Script?</h4>
         Sure. There's made a tutorial on how to use the script on its own. However it is still only available for Mac OS.<br>
         <a class="btn btn-info" target="_blank" href="http://www.instructables.com/id/Easy-Mac-Wallpaper-Downloader/">View Tutorial</a>
+      <h4>Why You Dont Have My Screen Size or Device?</h4>
+        This site doesnt get updated often, your best bet is to get as close as possible with what we got. Sorry.<br>
         <hr>
         <h4>Created By Two Guys With Spare Time</h4>
         <div class="media">
@@ -193,7 +185,7 @@
               </a>
               <div class="media-body">
                 <h4 class="media-heading">TXTCLA55</h4>
-                Part-time maker, full time funny man. I can be found lots of places on the web under the same alias. My part in this site was just the base HTML. CSS provided by Twitter Bootstrap.
+                Part-time maker, full time funny man. I can be found lots of places on the web under the same alias. My part in this site was just the base HTML. The CSS however is provided by <a class="btn-link" target="_blank" href="http://twitter.github.io/bootstrap/index.html">Twitter Bootstrap</a>.
               </div>
             </div>
             <div class="media">
