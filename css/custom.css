@@ -38,6 +38,16 @@ body.background {
     margin-top: 28px;
 }
 
+/* Put space between the two buttons */
+a#btn_about {
+  width: 80px;
+  margin-right: 25px;
+}
+
+div.container-button {
+  margin-bottom: 20px; 
+}
+
 body,td,th {
     color: #000000;
 }
