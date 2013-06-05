@@ -51,7 +51,7 @@ div.container-button {
 
 /* Set the background colour of the modal */
 div.modal {
-    background-color: #EEEEEE;
+    background-color: #F5F5F5;
 }
 
 div.modal-header {
@@ -63,7 +63,7 @@ div.modal-header {
     border-top-right-radius: 6px;
     border-bottom: 1px solid #DDDDDD;
     box-shadow: 0 0 1px #FFFFFF inset;
-    background-color: #EEEEEE;
+    background-color: #F5F5F5;
 }
 
 div.modal-footer {
@@ -73,7 +73,7 @@ div.modal-footer {
     -moz-border-radius-bottomleft: 6px;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
-    background-color: #EEEEEE;
+    background-color: #F5F5F5;
 }
 
 body,td,th {
