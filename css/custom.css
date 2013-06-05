@@ -1,9 +1,11 @@
 body.background {
     padding-top: 20px;
     padding-bottom: 40px;
-    background-image: url(../img/bgimg3.jpg);
-    background-repeat: no-repeat;
-    background-position:center;
+    background: url(../img/bgimg3.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 /* Custom container */
