@@ -42,87 +42,56 @@
               <br />
               <h4>Please select a resolution and quantity.</h4>
               <select class="select">
-                <option value="">
-                  Select a Resolution
-                </option>
-                <optgroup label="Tablet's">
-                  <option id="res_2160x1920_1" value="2160x1920">
-                    1080x1920
-                  </option>
-                  <option id="res_1920x1408_1" value="1920x1408">
-                    1280x800
-                </optgroup>
-                <optgroup label="Retnia and HDTV">
-                  <option id="res_2880x1800_1" value="2880x1800">
-                    2880x1800 Retnia Display
-                  </option>
-                  <option id="res_1920x1080_1" value="1920x1080">
-                    1920x1080 1080p HDTV 
-                  </option>
-                  <option id="res_1280x720_1" value="1280x720">
-                    1280x720 720p HDTV
-                  </option>
-                </optgroup>
-                <optgroup label="Fullscreen">
-                  <option id="res_1680x1050_1" value="1680x1050">
-                    1680x1050
-                  </option>
-                  <option id="res_1600x900_1" value="1600x900">
-                    1600x900 16:9
-                  </option>
-                  <option id="res_1400x900_1" value="1400x900">
-                    1400x900 14:9
-                  </option>
-                  <option id="res_1366x768_1" value="1366x768">
-                    1366x768
-                  </option>
-                  <option id="res_1280x1024_1" value="1280x1024">
-                    1280x1024
-                  </option>
-                  <option id="res_1280x1024_1" value="1280x800">
-                    1280x800
-                  </option>
-                  <option id="res_1024x768_1" value="1024x768">
-                    1024x768
-                  </option>
-                  <option id="res_1024x600_1" value="1024x600">
-                    1024x600
-                  </option>
-                </optgroup>
-                <optgroup label="Large Screen">
-                  <option id="res_3840x2160_1" value="3840x2160">
-                    3840x2160
-                  </option>
-                  <option id="res_2880x1620_1" value="2880x1620">
-                    2880x1620
-                  </option>
-                  <option id="res_2560x1440_1" value="2560x1440">
-                    2560x1440
-                  </option>
-                </optgroup>
-              </select>
+                <option value="">Select Resolution</option>
+            <optgroup label="Fullscreen 4:3">
+               <option id="res_1600x1200_1" value="1600x1200">1600x1200</option>
+               <option id="res_1600x900_1" value="1600x900">1600x900 16:9</option>
+               <option id="res_1400x1050_1" value="1400x1050">1400x1050</option>
+               <option id="res_1280x960_1" value="1280x960">1280x960</option>
+               <option id="res_1024x768_1" value="1024x768">1024x768</option>
+            </optgroup>
+            <optgroup label="Fullscreen 5:4">
+               <option id="res_1280x1024_1" value="1280x1024">1280x1024</option>
+            </optgroup>
+            <optgroup label="Tablets">
+               <option id="res_2160x1920_1" value="2160x1920">1080x1920 Tablet</option>
+               <option id="res_1920x1408_1" value="1920x1408">1280x800 Tablet</option>
+               <option id="res_600x1024_1" value="600x1024"> Kindle Fire</option>
+            </optgroup>
+            <optgroup label="Netbooks">
+               <option id="res_1366x768_1" value="1366x768">1366x768</option>
+               <option id="res_1024x600_1" value="1024x600">1024x600</option>
+               <option id="res_800x480_1" value="800x480">800x480</option>
+            <optgroup label="Widescreen 16:10">
+               <option id="res_3840x2400_1" value="3840x2400">3840x2400</option>
+               <option id="res_2880x1800_1" value="2880x1800">2880x1800 (Retina MacBook Pro)</option>
+               <option id="res_2560x1600_1" value="2560x1600">2560x1600</option>
+               <option id="res_2560x1080_1" value="2560x1080">2560x1080</option>
+               <option id="res_1920x1200_1" value="1920x1200">1920x1200</option>
+               <option id="res_1680x1050_1" value="1680x1050">1680x1050</option>
+               <option id="res_1440x900_1" value="1440x900">1440x900</option>
+               <option id="res_1280x800_1" value="1280x800">1280x800</option>
+               <option id="res_1024x640_1" value="1024x640">1024x640</option>
+            </optgroup>
+            <optgroup label="Widescreen 16:9">
+               <option id="res_3840x2160_1" value="3840x2160">3840x2160</option>
+               <option id="res_2880x1620_1" value="2880x1620">2880x1620</option>
+               <option id="res_2560x1440_1" value="2560x1440">2560x1440</option>
+               <option id="res_1920x1080_1" value="1920x1080">1920x1080 (1080p HDTV)</option>
+               <option id="res_1600x900_1" value="1600x900">1600x900</option>
+               <option id="res_1280x720_1" value="1280x720">1280x720 (720p HDTV)</option>
+            </optgroup>
+            </select>
               <select>
                 <option value="">
                   Select Quantity
                 </option>
-                <option id="wall_5" value="5">
-                  5 Wallpapers
-                </option>
-                <option id="wall_10" value="10">
-                  10 Wallpapers
-                </option>
-                <option id="wall_20" value="20">
-                  20 Wallpapers
-                </option>
-                <option id="wall_40" value="40">
-                  40 Wallpapers
-                </option>
-                <option id="wall_50" value="50">
-                  50 Wallpapers
-                </option>
-                <option id="wall_100" value="100">
-                  100 Wallpapers
-                </option>
+                <option id="wall_5" value="5">5 Wallpapers</option>
+                <option id="wall_10" value="10">10 Wallpapers</option>
+                <option id="wall_20" value="20">20 Wallpapers</option>
+                <option id="wall_40" value="40">40 Wallpapers</option>
+                <option id="wall_50" value="50">50 Wallpapers</option>
+                <option id="wall_100" value="100">100 Wallpapers</option>
               </select>
               <div class="row-fluid marketing">
                 <div class="span12">
