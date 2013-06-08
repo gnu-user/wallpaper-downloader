@@ -19,6 +19,13 @@
 session_start();
 
 
+/* Connect to Redis and get the high and low resolution images */
+$redis = new Redis();
+$redis->connect('127.0.0.1'); // port 6379 by default
+
+$lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
+$highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
+
  /* Display the header */
 include 'templates/header.php';
 

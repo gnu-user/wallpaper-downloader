@@ -1,11 +1,11 @@
-body.background {
+#wallpaper.background {
     padding-top: 20px;
     padding-bottom: 40px;
-    background: url(../img/bgimg3.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    height: 100%;
 }
 
 /* Custom container */

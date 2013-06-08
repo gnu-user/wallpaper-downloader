@@ -8,12 +8,15 @@
  * 
  * Depends on the $session_id being set, this is used to submit a job
  * for fetching the wallpapers.
+ * 
+ * Depends on the $highres_img being set in order to have the link
+ * to download the background.
  *
  */
 ?>
   <!-- LE CONTENT NOW STARTS HERE -->
-  <body class="background">
-    <div id="wallpaper" class="container-narrow">
+  <body id="wallpaper" class="background">
+    <div class="container-narrow">
       <div class="jumbotron">
         <h1>
           Bulk Wallpaper Downloader
@@ -71,7 +74,7 @@
               </option>
               <option id="wall_5" value="5">5 Wallpapers</option>
               <option id="wall_10" value="10">10 Wallpapers</option>
-              <option id="wall_20" value="20">25 Wallpapers</option>
+              <option id="wall_25" value="25">25 Wallpapers</option>
               <option id="wall_50" value="50">50 Wallpapers</option>
             </select>
               <div class="row-fluid marketing">
@@ -83,7 +86,7 @@
                     </div>
                     <hr>
                     <p>
-                      Like the current background? <a href="img/bgimg3.jpg" target="_blank">Right click here and "Save Link As"</a>
+                      Like the current background? <a href="<?php echo $highres_img ?>" target="_blank">Right click here and "Save Link As"</a>
                     </p>
                   </center>
                 </div>
