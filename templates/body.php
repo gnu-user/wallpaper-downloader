@@ -71,10 +71,8 @@
               </option>
               <option id="wall_5" value="5">5 Wallpapers</option>
               <option id="wall_10" value="10">10 Wallpapers</option>
-              <option id="wall_20" value="20">20 Wallpapers</option>
-              <option id="wall_40" value="40">40 Wallpapers</option>
+              <option id="wall_20" value="20">25 Wallpapers</option>
               <option id="wall_50" value="50">50 Wallpapers</option>
-              <option id="wall_100" value="100">100 Wallpapers</option>
             </select>
               <div class="row-fluid marketing">
                 <div class="span12">
