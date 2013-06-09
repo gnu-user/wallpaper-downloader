@@ -25,6 +25,9 @@ $redis->connect('127.0.0.1'); // port 6379 by default
 
 $lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
 $highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
+$session_id = session_id();
+
+print_r($_POST);
 
  /* Display the header */
 include 'templates/header.php';

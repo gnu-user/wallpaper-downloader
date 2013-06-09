@@ -8,6 +8,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <!-- Custom JS script -->
+    <script src="js/custom.js"></script>
     <!-- Sharing Icons Script -->
     <script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
