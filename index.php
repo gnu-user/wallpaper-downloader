@@ -27,7 +27,10 @@ $lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
 $highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
 $session_id = session_id();
 
-print_r($_POST);
+if (isset($_POST['session_id']))
+{
+    $redis->set($_POST['session_id'], 0);
+}
 
  /* Display the header */
 include 'templates/header.php';

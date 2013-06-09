@@ -40,13 +40,32 @@ $(document).ready(function () {
     });
 });
 
-/* A function which gets the progress of job preparing the wallpapers */
-function getProgress(session_id)
+/* Displays the progress of the job */
+function displayProgress(progress)
 {
-    $('#progress_bar').css('width', '50%');
+    console.log('progress: ' + progress);
+    $('#progress_bar').css('width', progress + '%');
 }
 
-function logIt(data)
+/* Gets the progress of job preparing the wallpapers */
+function getProgress(session_id, progress)
 {
-  console.log(data);
+    progress = typeof progress !== 'undefined' ? progress : 0;
+
+    setTimeout(function () {
+        /* Display the current progress */
+        displayProgress(progress);
+
+        if (progress < 100) {
+            /* Get the job progress */
+            $.ajax({
+                type: 'GET',
+                url: rootURL + '/api/progress/' + session_id,
+                dataType: "json",
+                success: function(data) {
+                    getProgress(session_id, data);
+                }
+            });
+        }
+    }, 1000)
 }
