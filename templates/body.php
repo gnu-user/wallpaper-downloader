@@ -27,11 +27,11 @@
       </div>
       <div class="row-fluid marketing">
         <div class="span12">
-          <div class="well well-small">
+          <form id="download_form" class="well well-small" action="index.php" method="post" accept-charset="UTF-8">
             <center>
               <br />
               <h4>Please select a resolution and quantity.</h4>
-              <select class="select">
+              <select name="resolution" class="select">
                 <option value="">Select Resolution</option>
                 <optgroup label="Mobile Devices">
                   <option id="res_1280x800" value="1280x800">1280x800 Tablet</option>
@@ -48,41 +48,40 @@
                </optgroup>
                <optgroup label="Fullscreen 5:4">
                 <option id="res_1280x1024" value="1280x1024">1280x1024</option>
-              </optgroup>
-              <optgroup label="Notebooks">
-               <option id="res_1366x768" value="1366x768">1366x768</option>
-               <option id="res_1024x600" value="1024x600">1024x600</option>
-             </optgroup>
-             <optgroup label="Widescreen 16:10">
-               <option id="res_2880x1800" value="2880x1800">2880x1800 (Retina MacBook Pro)</option>
-               <option id="res_2560x1600" value="2560x1600">2560x1600</option>
-               <option id="res_1920x1200" value="1920x1200">1920x1200</option>
-               <option id="res_1680x1050" value="1680x1050">1680x1050</option>
-               <option id="res_1440x900" value="1440x900">1440x900</option>
-               <option id="res_1280x800_1" value="1280x800">1280x800</option>
-             </optgroup>
-             <optgroup label="Widescreen 16:9">
-               <option id="res_2560x1440" value="2560x1440">2560x1440</option>
-               <option id="res_1920x1080" value="1920x1080">1920x1080 (1080p HDTV)</option>
-               <option id="res_1600x900" value="1600x900">1600x900</option>
-               <option id="res_1280x720" value="1280x720">1280x720 (720p HDTV)</option>
-             </optgroup>
-           </select>
-           <select>
-              <option value="">
-                Select Quantity
-              </option>
-              <option id="wall_5" value="5">5 Wallpapers</option>
-              <option id="wall_10" value="10">10 Wallpapers</option>
-              <option id="wall_25" value="25">25 Wallpapers</option>
-              <option id="wall_50" value="50">50 Wallpapers</option>
-            </select>
+                </optgroup>
+                <optgroup label="Notebooks">
+                 <option id="res_1366x768" value="1366x768">1366x768</option>
+                 <option id="res_1024x600" value="1024x600">1024x600</option>
+               </optgroup>
+               <optgroup label="Widescreen 16:10">
+                 <option id="res_2880x1800" value="2880x1800">2880x1800 (Retina MacBook Pro)</option>
+                 <option id="res_2560x1600" value="2560x1600">2560x1600</option>
+                 <option id="res_1920x1200" value="1920x1200">1920x1200</option>
+                 <option id="res_1680x1050" value="1680x1050">1680x1050</option>
+                 <option id="res_1440x900" value="1440x900">1440x900</option>
+                 <option id="res_1280x800_1" value="1280x800">1280x800</option>
+               </optgroup>
+               <optgroup label="Widescreen 16:9">
+                 <option id="res_2560x1440" value="2560x1440">2560x1440</option>
+                 <option id="res_1920x1080" value="1920x1080">1920x1080 (1080p HDTV)</option>
+                 <option id="res_1600x900" value="1600x900">1600x900</option>
+                 <option id="res_1280x720" value="1280x720">1280x720 (720p HDTV)</option>
+               </optgroup>
+              </select>
+              <select name="quantity" class="select">
+                <option value="">Select Quantity</option>
+                <option id="wall_5" value="5">5 Wallpapers</option>
+                <option id="wall_10" value="10">10 Wallpapers</option>
+                <option id="wall_25" value="25">25 Wallpapers</option>
+                <option id="wall_50" value="50">50 Wallpapers</option>
+              </select>
+              <input type="hidden" id="session_id" name="session_id" value="<?php echo $session_id ?>"/>
               <div class="row-fluid marketing">
                 <div class="span12">
                   <center>
                     <div class="container-button">
                       <a id="btn_about" class="btn btn-large btn-info" href="#myModal" data-toggle="modal">About</a>
-                      <button class="btn btn-large btn-success" href="#downloadModal" data-toggle="modal">Download</button>
+                      <button id="btn_download" class="btn btn-large btn-success" href="#downloadModal" data-toggle="modal">Download</button>
                     </div>
                     <hr>
                     <p>
@@ -105,7 +104,7 @@
                 </div>
               </div>
             </center>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -119,8 +118,8 @@
         <p>
           Our Servers are powered by caffeinated hamsters, you won't be waiting long.
         </p>
-        <div class="progress progress-striped progress-success">
-          <div class="bar" style="width: 0%;"></div>
+        <div class="progress progress-striped progress-success active">
+          <div id="progress_bar" class="bar"></div>
         </div>
       </div>
       <div class="modal-footer">
