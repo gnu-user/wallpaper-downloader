@@ -67,5 +67,22 @@ function getProgress(session_id, progress)
                 }
             });
         }
-    }, 1000)
+        else if (progress >= 100) {
+            /* The file is ready get the file to download */
+            getDownload(session_id);
+        }
+    }, 1000);
+}
+
+/* Gets the wallpaper zip file download */
+function getDownload(session_id)
+{
+    $.ajax({
+        type: 'GET',
+        url: rootURL + '/api/download/' + session_id,
+        dataType: "json",
+        success: function(data) {
+            window.location.assign(data);
+        }
+    });
 }
