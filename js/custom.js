@@ -40,13 +40,6 @@ $(document).ready(function () {
     });
 });
 
-/* Displays the progress of the job */
-function displayProgress(progress)
-{
-    console.log('progress: ' + progress);
-    $('#progress_bar').css('width', progress + '%');
-}
-
 /* Gets the progress of job preparing the wallpapers */
 function getProgress(session_id, progress)
 {
@@ -54,7 +47,7 @@ function getProgress(session_id, progress)
 
     setTimeout(function () {
         /* Display the current progress */
-        displayProgress(progress);
+        $('#progress_bar').css('width', progress + '%');
 
         if (progress < 100) {
             /* Get the job progress */
