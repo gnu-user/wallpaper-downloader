@@ -54,7 +54,8 @@ function getProgress(session_id, progress)
             $.ajax({
                 type: 'GET',
                 url: rootURL + '/api/progress/' + session_id,
-                dataType: "json",
+                dataType: 'json',
+                cache: false,
                 success: function(data) {
                     getProgress(session_id, data);
                 }
@@ -73,7 +74,7 @@ function getDownload(session_id)
     $.ajax({
         type: 'GET',
         url: rootURL + '/api/download/' + session_id,
-        dataType: "json",
+        dataType: 'json',
         success: function(data) {
             window.location.assign(data);
         }
