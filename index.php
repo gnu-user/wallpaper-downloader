@@ -16,29 +16,60 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+require_once 'inc/validate.php';
+require_once 'inc/globals.php';
+
 session_start();
 
 
 /* Connect to Redis and get the high and low resolution images */
 $redis = new Redis();
-$redis->connect('127.0.0.1'); // port 6379 by default
-
-$lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
-$highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
-$session_id = session_id();
-
-if (isset($_POST['session_id']))
+if (! $redis->connect('127.0.0.1'))
 {
-    $redis->set($_POST['session_id'], 0);
+    printf("Connection failed!\n");
+    exit();
 }
 
- /* Display the header */
-include 'templates/header.php';
 
-/* The main body of the page */
-include 'templates/body.php';
+/* If the user submitted valid data submit the request as a new job */
+if (isset($_POST['resolution']) && isset($_POST['quantity']) && isset($_POST['session_id']))
+{
+    /* If the data is valid then submit request to the queue */
+    if (valid_resolution($_POST['resolution'])
+        && valid_quantity($_POST['quantity'])
+        && valid_session_id($_POST['session_id']))
+    {
+        $redis->set('job:' . $_POST['session_id'] . ':resolution', $_POST['resolution']);
+        $redis->setTimeout('job:' . $_POST['session_id'] . ':resolution', $job_TTL);
+        $redis->set('job:' . $_POST['session_id'] . ':quantity', $_POST['quantity']);
+        $redis->setTimeout('job:' . $_POST['session_id'] . ':quantity', $job_TTL);
+        $redis->zAdd('job:queue:uuids', round(microtime(true) * 1000), $_POST['session_id']);
+    }
+    /* Set the progress to -1 and store the error message in Redis */
+    else
+    {
+        foreach ($error_msg as $error)
+        {
+            $redis->rPush('job:' . $_POST['session_id'] . ':error', $error);
+        }
+        $redis->setTimeout('job:' . $_POST['session_id'] . ':error', $job_TTL);
+    }
+}
+/* User is loading the page, get a random background */
+else
+{
+    $lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
+    $highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
 
-/* Include the footer */
-include 'templates/footer.php';
+     /* Display the header */
+    include 'templates/header.php';
 
+    /* The main body of the page */
+    include 'templates/body.php';
+
+    /* Include the footer */
+    include 'templates/footer.php';
+}
+
+$redis->close();
 ?>
