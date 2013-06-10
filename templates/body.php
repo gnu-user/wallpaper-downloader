@@ -6,8 +6,8 @@
  * DEPENDENCIES
  * ------------
  * 
- * Depends on the $session_id being set, this is used to submit a job
- * for fetching the wallpapers.
+ * Depends on a session being started, so session_id() method can be used to get a unique
+ * session id when a job is submitted to fetch wallpapers.
  * 
  * Depends on the $highres_img being set in order to have the link
  * to download the background.
@@ -75,7 +75,7 @@
                 <option id="wall_25" value="25">25 Wallpapers</option>
                 <option id="wall_50" value="50">50 Wallpapers</option>
               </select>
-              <input type="hidden" id="session_id" name="session_id" value="<?php echo $session_id ?>"/>
+              <input type="hidden" id="session_id" name="session_id" value="<?php echo session_id() ?>"/>
               <div class="row-fluid marketing">
                 <div class="span12">
                   <center>
