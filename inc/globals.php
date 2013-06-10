@@ -22,7 +22,7 @@
  * downloads allowed without having to pass around the same arguments to multiple
  * functions
  */
-$error_msg = array();
+$error_msg;
 
 $supported_resolutions = array('1280x800', '800x600', '720x1280', '480x800', 
                               '320x480', '1600x1200', '1400x1050', '1280x960', 

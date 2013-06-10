@@ -48,11 +48,8 @@ if (isset($_POST['resolution']) && isset($_POST['quantity']) && isset($_POST['se
     /* Set the progress to -1 and store the error message in Redis */
     else
     {
-        foreach ($error_msg as $error)
-        {
-            $redis->rPush('job:' . $_POST['session_id'] . ':error', $error);
-        }
-        $redis->setTimeout('job:' . $_POST['session_id'] . ':error', $job_TTL);
+        $redis->set('job:' . session_id() . ':error', $error_msg);
+        $redis->setTimeout('job:' . session_id() . ':error', $job_TTL);
     }
 }
 /* User is loading the page, get a random background */

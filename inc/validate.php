@@ -36,7 +36,7 @@ function valid_session_id($session_id)
         return TRUE;
     }
 
-    array_push($error_msg, 'Invalid Session ID: ' . $session_id);
+    $error_msg = 'Invalid Session ID!';
     return FALSE;
 }
 
@@ -59,7 +59,7 @@ function valid_resolution($resolution)
         return TRUE;
     }
 
-    array_push($error_msg, 'Invalid Resolution: ' . $resolution);
+    $error_msg = 'Invalid Resolution!';
     return FALSE;
 }
 
@@ -82,7 +82,7 @@ function valid_quantity($quantity)
         return TRUE;
     }
 
-    array_push($error_msg, 'Invalid Quantity: ' . $quantity);
+    $error_msg = 'Invalid Quantity!';
     return FALSE;
 }
 ?>
