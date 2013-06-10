@@ -30,6 +30,7 @@ $app = new \Slim\Slim();
 
 /* Gets the progress of a download request submitted by a user */
 $app->get('/progress/:session_id', 'getProgress');
+$app->get('/errors/:session_id', 'getErrors');
 $app->get('/download/:session_id', 'getDownload');
 
 $app->run();
@@ -47,13 +48,43 @@ function getProgress($session_id)
 
 	/* Connect to Redis */
 	$redis = new Redis();
-	$redis->connect('127.0.0.1');
 
 	/* check connection */
+	if (! $redis->connect('127.0.0.1'))
+	{
+	    printf("Connection failed!\n");
+	    exit();
+	}
 
 	/* Get the progress of the job */
-	echo json_encode($redis->get($session_id));
+	echo json_encode($redis->get('job:' . $session_id . ':progress'));
 }
+
+
+/** 
+ * Get the list of errors messages in the event that there was an error.
+ * @package api
+ *
+ * @param string $session_id The session id of the user who submitted the request
+ */
+function getErrors($session_id)
+{
+	global $db_user, $db_pass, $db_elec_name;
+
+	/* Connect to Redis */
+	$redis = new Redis();
+
+	/* check connection */
+	if (! $redis->connect('127.0.0.1'))
+	{
+	    printf("Connection failed!\n");
+	    exit();
+	}
+
+	/* Get the progress of the job */
+	echo json_encode($redis->get('job:' . $session_id . ':error'));
+}
+
 
 /** 
  * Get the location of the file to download for the request submitted by the user
@@ -67,12 +98,15 @@ function getDownload($session_id)
 
 	/* Connect to Redis */
 	$redis = new Redis();
-	$redis->connect('127.0.0.1');
 
 	/* check connection */
+	if (! $redis->connect('127.0.0.1'))
+	{
+	    printf("Connection failed!\n");
+	    exit();
+	}
 
 	/* Get the progress of the job */
-	echo json_encode($redis->get($session_id . ':download'));
+	echo json_encode($redis->get('job:' . $session_id . ':file'));
 }
-
 ?>
