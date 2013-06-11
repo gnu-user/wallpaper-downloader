@@ -38,6 +38,11 @@ $(document).ready(function () {
         });
         event.preventDefault();
     });
+
+    /* Close the submit error on click */
+    $('.alert .close').click( function() {
+        $(this).parent().hide();
+    });
 });
 
 /* Gets the progress of job preparing the wallpapers */
@@ -49,7 +54,12 @@ function getProgress(session_id, progress)
         /* Display the current progress */
         $('#progress_bar').css('width', progress + '%');
 
-        if (progress < 100) {
+        if (progress == -1) {
+            /* Something went wrong or job cancelled, display any errors */
+            $('#downloadModal').modal('hide');
+            showError(session_id);
+        }
+        else if (progress < 100) {
             /* Get the job progress */
             $.ajax({
                 type: 'GET',
@@ -65,6 +75,7 @@ function getProgress(session_id, progress)
             /* The file is ready get the file to download */
             getDownload(session_id);
         }
+
     }, 1000);
 }
 
@@ -77,6 +88,30 @@ function getDownload(session_id)
         dataType: 'json',
         success: function(data) {
             window.location.assign(data);
+        }
+    });
+}
+
+/* Displays the error message */
+function showError(session_id)
+{
+    $.ajax({
+        type: 'GET',
+        url: rootURL + '/api/error/' + session_id,
+        dataType: 'json',
+        success: function(data) {
+            if (data.length > 1)
+            {
+                //if ($.trim($('#form-error').text()).length <= 1) {
+                $('#form-error p').empty();
+                $('#form-error').append('<p><strong>Error!</strong> ' + data + '</p>');
+
+                /* Show the error for 5 seconds */
+                $('#form-error').show();
+                setTimeout(function() {
+                    $("#form-error").hide()
+                }, 5000);
+            }
         }
     });
 }
