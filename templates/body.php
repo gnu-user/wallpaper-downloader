@@ -76,6 +76,9 @@
                 <option id="wall_50" value="50">50 Wallpapers</option>
               </select>
               <input type="hidden" id="session_id" name="session_id" value="<?php echo session_id() ?>"/>
+              <div id="form-error" class="span8 center alert alert-error fade in" style="display:none;">
+                <button class="close" type="button">&times;</button>
+              </div>
               <div class="row-fluid marketing">
                 <div class="span12">
                   <center>

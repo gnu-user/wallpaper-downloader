@@ -46,6 +46,16 @@ a#btn_about {
   margin-right: 25px;
 }
 
+/* Specific styling for the submit form error message */
+#form-error.center { 
+    float: none; 
+    margin:0 auto;
+}
+
+#form-error.center p {
+    margin-bottom: 0;
+}
+
 div.container-button {
   margin-bottom: 20px; 
 }
