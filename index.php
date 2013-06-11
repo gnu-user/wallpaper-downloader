@@ -50,6 +50,8 @@ if (isset($_POST['resolution']) && isset($_POST['quantity']) && isset($_POST['se
     {
         $redis->set('job:' . session_id() . ':error', $error_msg);
         $redis->setTimeout('job:' . session_id() . ':error', $job_TTL);
+        $redis->set('job:' . session_id() . ':progress', -1);
+        $redis->setTimeout('job:' . session_id() . ':progress', 2);
     }
 }
 /* User is loading the page, get a random background */

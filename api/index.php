@@ -30,7 +30,7 @@ $app = new \Slim\Slim();
 
 /* Gets the progress of a download request submitted by a user */
 $app->get('/progress/:session_id', 'getProgress');
-$app->get('/errors/:session_id', 'getErrors');
+$app->get('/error/:session_id', 'getError');
 $app->get('/download/:session_id', 'getDownload');
 
 $app->run();
@@ -67,7 +67,7 @@ function getProgress($session_id)
  *
  * @param string $session_id The session id of the user who submitted the request
  */
-function getErrors($session_id)
+function getError($session_id)
 {
 	global $db_user, $db_pass, $db_elec_name;
 
