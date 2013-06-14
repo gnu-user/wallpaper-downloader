@@ -23,7 +23,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from multiprocessing import Pool, cpu_count, ProcessError
+from multiprocessing import Pool, cpu_count, ProcessError, get_logger, log_to_stderr
 from worker import *
 import logging
 import redis
@@ -31,8 +31,26 @@ import time
 import sys
 
 
-# The maximum number of jobs to execute in the pool
+# Default maximum number of jobs to execute in the pool
 max_processes = cpu_count() * 2
+
+# Process command line arguments
+if len(sys.argv) == 2 and sys.argv[1] == '--help':
+    sys.stderr.write("Usage: manager.py {max processes}\n")
+    sys.stderr.write("Example: manager.py 16\n")
+    sys.exit(2)
+elif len(sys.argv) == 2:
+    try:
+        max_processes = int(sys.argv[1])
+    except ValueError:
+        sys.stderr.write("Invalid number of max processes!\n")
+        sys.exit(1)
+
+# Configure the logging, at the moment multiprocessing can ONLY log to console
+log_to_stderr()
+logger = get_logger()
+logger.setLevel(logging.INFO)
+
 
 # Create a pool of processes
 pool = Pool(processes=max_processes, maxtasksperchild=4)
@@ -44,6 +62,7 @@ r = redis.StrictRedis(host='localhost')
 while True:
     for task in r.zrange('job:queue:uuids', 0, -1):
         # Add the uuid of the task to the pool and remove it from queue
+        logger.info('Executing job: ' + task)
         pool.apply_async(prepare_download, [task])
         #r.zrem('job:queue:uuids', task)
 
