@@ -23,6 +23,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+from multiprocessing import get_logger
+from util import *
 import logging
 import redis
 import time
@@ -37,26 +39,35 @@ def prepare_download(task):
     of wallpapers based on the resolution and number of wallpapers specified and
     creates a compressed zip file for download.
     """
-    # Connect to the local Redis database
+    # Connect to the local Redis database, get logger
     r = redis.StrictRedis(host='localhost')
+    logger = get_logger()
 
     # Get the resolution and number of downloads requested
     resolution = r.get('job:' + task + ':resolution')
     quantity = r.get('job:' + task + ':quantity')
 
-    # Process the job if the resolution and quantity exist
-    if resolution and quantity:
-        if r.scard('image:' + resolution + ':uuids') < max_wallpapers:
-            download_wallpapers(r, resolution, quantity)
+    # Exit if the job timed out (resolution and quantity requested no longer exist)
+    # This should not happen unless the system is under heavy load, log issue
+    if not resolution or not quantity:
+        logger.warning('Job: ' + task + ' No resolution or quantity, job expired?')
+        sys.exit(1)
+
+    # Download more wallpapers if there are not enough for the resolution
+    if r.scard('image:' + resolution + ':uuids') < max_wallpapers:
+        logger.info('Job: ' + task + ' Downloading: ' + resolution + ' wallpapers!')
+        download_wallpapers(r, resolution, quantity)
 
     # Get a random set of wallpapers and create a zip file
     wallpapers = []
-    for uuid in r.srandmember('image:' + resolution + ':uuids'):
+    for uuid in r.srandmember('image:' + resolution + ':uuids', quantity):
         wallpapers.append(r.get('image:' + uuid + ':resolution'))
 
     # Create a zip file, set key in redis
     # set progress to 100
     # if resolution == 1080p create low res versions and add to backgrounds list
+    file = generate_uuid() + '.zip'
+    logger.info('Job: ' + task + ' Creating compressed file: ' + file)
 
 
 def download_wallpapers(r, resolution, quantity):

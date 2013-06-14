@@ -24,8 +24,9 @@ import re
 import uuid
 import base64
 
+
 def generate_uuid():
-    """Generate a Base64 encoded UUID which can be used safely
-    """ 
+    """Generate a Base64 encoded UUID which can be used safely as a key
+    """
     r_uuid = base64.urlsafe_b64encode(uuid.uuid4().bytes)
     return re.sub(r'[\=\+\-\_\/]', '', r_uuid)
