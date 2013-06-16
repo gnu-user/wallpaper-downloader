@@ -103,15 +103,14 @@ class WallDownloader(object):
         if not resolution in self._resolutions:
             raise KeyError('The resolution: ' + resolution + ' is unsupported!')
 
-        if self.directory == '':
-            self.directory = resolution
-            if not os.path.exists(self.directory):
-                os.makedirs(self.directory)
+        self.directory = os.path.join(os.path.normpath(self.directory), resolution)
+        if not os.path.exists(self.directory):
+            os.makedirs(self.directory)
 
         downloads = 0
         # Download the quantity of wallpapers specified, yield the path and name
         for filename, download_url in self.get_wallpaper(resolution):
-            if downloads == quantity:
+            if downloads >= quantity:
                 break
 
             if filename == '' or download_url == '':
@@ -139,9 +138,8 @@ class WallDownloader(object):
         """
         # Get the URL of the specific resolution wallpapers
         url = self._resolutions[resolution]
-
+        page_count = 1
         while True:
-            page_count = 1
             print "CURRENT PAGE URL: " + url + "index" + str(page_count) + ".html"
             data = self.opener.open(url + "index" + str(page_count) + ".html").read()
             currentpos = 0
