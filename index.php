@@ -44,6 +44,8 @@ if (isset($_POST['resolution']) && isset($_POST['quantity']) && isset($_POST['se
         $redis->set('job:' . $_POST['session_id'] . ':quantity', $_POST['quantity']);
         $redis->setTimeout('job:' . $_POST['session_id'] . ':quantity', $job_TTL);
         $redis->zAdd('job:queue:uuids', round(microtime(true) * 1000), $_POST['session_id']);
+        $redis->set('job:' . $_POST['session_id'] . ':progress', 0);
+        $redis->setTimeout('job:' . $_POST['session_id'] . ':progress', $job_TTL);
     }
     /* Set the progress to -1 and store the error message in Redis */
     else
