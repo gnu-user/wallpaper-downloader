@@ -24,17 +24,19 @@
 #
 ###############################################################################
 from multiprocessing import get_logger
+from walldownloader import *
 from util import *
 import logging
 import redis
 import time
 import sys
+import math
 
 # The maximum number of wallpapers for each resolution to download
 max_wallpapers = 250
 
 
-def prepare_download(task):
+def prepare_download(task, image_dir, output_dir):
     """Prepares a download request submitted by a user, fetches a random set
     of wallpapers based on the resolution and number of wallpapers specified and
     creates a compressed zip file for download.
@@ -45,7 +47,7 @@ def prepare_download(task):
 
     # Get the resolution and number of downloads requested
     resolution = r.get('job:' + task + ':resolution')
-    quantity = r.get('job:' + task + ':quantity')
+    quantity = int(r.get('job:' + task + ':quantity'))
 
     # Exit if the job timed out (resolution and quantity requested no longer exist)
     # This should not happen unless the system is under heavy load, log issue
@@ -56,12 +58,14 @@ def prepare_download(task):
     # Download more wallpapers if there are not enough for the resolution
     if r.scard('image:' + resolution + ':uuids') < max_wallpapers:
         logger.info('Job: ' + task + ' Downloading: ' + resolution + ' wallpapers!')
-        download_wallpapers(r, resolution, quantity)
+        download_wallpapers(r, task, image_dir, resolution, quantity)
 
     # Get a random set of wallpapers and create a zip file
     wallpapers = []
     for uuid in r.srandmember('image:' + resolution + ':uuids', quantity):
-        wallpapers.append(r.get('image:' + uuid + ':resolution'))
+        wallpapers.append(r.get('image:' + uuid + ':' + resolution))
+
+    logger.info('Job: ' + task + ' Wallpapers: ' + wallpapers)
 
     # Create a zip file, set key in redis
     # set progress to 100
@@ -70,8 +74,25 @@ def prepare_download(task):
     logger.info('Job: ' + task + ' Creating compressed file: ' + file)
 
 
-def download_wallpapers(r, resolution, quantity):
+def download_wallpapers(r, task, image_dir, resolution, quantity):
     """Downloads a number of wallpapers based on the resolution and quantity
     and adds each new wallpaper to the Redis database.
     """
-    print resolution, quantity
+    wall = WallDownloader(image_dir)
+    for wallpaper in wall.downloads(resolution, quantity):
+        print "Wallpaper: " + wallpaper + " downloaded!"
+        r.incrbyfloat('job:' + task + ':progress', 75.0 / quantity)
+
+        image_name = get_filename(wallpaper)
+        uuid = r.get('image:' + image_name + ':uuid')
+
+        if not uuid:
+            uuid = generate_uuid()
+            r.set('image:' + image_name + ':uuid', uuid)
+
+        # Add the image to the list for the current resolution
+        print "Adding image to list: " + image_name
+        r.set('image:' + uuid + ':' + resolution, wallpaper)
+        r.sadd('image:' + resolution + ':uuids', uuid)
+
+    print "DONE!!!!!!!!!!!!!!!"
