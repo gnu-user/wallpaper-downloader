@@ -31,20 +31,33 @@ import time
 import sys
 
 
+# Image and compressed zip file directories
+image_dir = ''
+output_dir = ''
+
 # Default maximum number of jobs to execute in the pool
 max_processes = cpu_count() * 2
 
 # Process command line arguments
-if len(sys.argv) == 2 and sys.argv[1] == '--help':
-    sys.stderr.write("Usage: manager.py {max processes}\n")
-    sys.stderr.write("Example: manager.py 16\n")
+if len(sys.argv) < 3 or sys.argv[1] == '--help':
+    sys.stderr.write("Usage: manager.py {image dir} {output dir} ({ax processes (optional)}\n")
+    sys.stderr.write("Example: manager.py images/ files/ 16\n")
     sys.exit(2)
-elif len(sys.argv) == 2:
-    try:
-        max_processes = int(sys.argv[1])
-    except ValueError:
-        sys.stderr.write("Invalid number of max processes!\n")
-        sys.exit(1)
+else:
+    image_dir, output_dir = sys.argv[1:3]
+
+    if not os.path.exists(image_dir):
+        os.makedirs(image_dir)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    if len(sys.argv) == 4:
+        try:
+            max_processes = int(sys.argv[1])
+        except ValueError:
+            sys.stderr.write("Invalid number of max processes!\n")
+            sys.exit(1)
+
 
 # Configure the logging, at the moment multiprocessing can ONLY log to console
 log_to_stderr()
@@ -63,7 +76,7 @@ while True:
     for task in r.zrange('job:queue:uuids', 0, -1):
         # Add the uuid of the task to the pool and remove it from queue
         logger.info('Executing job: ' + task)
-        pool.apply_async(prepare_download, [task])
-        #r.zrem('job:queue:uuids', task)
+        pool.apply_async(prepare_download, [task, image_dir, output_dir])
+        r.zrem('job:queue:uuids', task)
 
     time.sleep(1)
