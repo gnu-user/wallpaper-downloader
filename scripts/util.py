@@ -30,3 +30,10 @@ def generate_uuid():
     """
     r_uuid = base64.urlsafe_b64encode(uuid.uuid4().bytes)
     return re.sub(r'[\=\+\-\_\/]', '', r_uuid)
+
+
+def get_filename(file):
+    """Gets the raw, unique part of the filename (without the resolution component)
+    in order to easily identify the same image but at different resolutions.
+    """
+    return re.search(r'/([^/]+)_\d+x\d+.*\.jpg', file).group(1)
