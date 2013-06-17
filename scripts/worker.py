@@ -27,13 +27,16 @@ from multiprocessing import get_logger
 from walldownloader import *
 from util import *
 import logging
+from zipfile import ZipFile
 import redis
-import time
 import sys
-import math
+import os
 
 # The maximum number of wallpapers for each resolution to download
 max_wallpapers = 250
+
+# The TTL for jobs added to Redis, currently 4 hours
+job_TTL = 14400
 
 
 def prepare_download(task, image_dir, output_dir):
@@ -65,22 +68,22 @@ def prepare_download(task, image_dir, output_dir):
     for uuid in r.srandmember('image:' + resolution + ':uuids', quantity):
         wallpapers.append(r.get('image:' + uuid + ':' + resolution))
 
-    logger.info('Job: ' + task + ' Wallpapers: ' + wallpapers)
+    logger.info('Job: ' + task + ' Wallpapers: ' + ', '.join(wallpapers))
 
     # Create a zip file, set key in redis
-    # set progress to 100
-    # if resolution == 1080p create low res versions and add to backgrounds list
-    file = generate_uuid() + '.zip'
-    logger.info('Job: ' + task + ' Creating compressed file: ' + file)
+    compress_wallpapers(r, task, output_dir, wallpapers)
+
+    sys.exit(0)
 
 
 def download_wallpapers(r, task, image_dir, resolution, quantity):
     """Downloads a number of wallpapers based on the resolution and quantity
     and adds each new wallpaper to the Redis database.
     """
+    logger = get_logger()
     wall = WallDownloader(image_dir)
     for wallpaper in wall.downloads(resolution, quantity):
-        print "Wallpaper: " + wallpaper + " downloaded!"
+        logger.info("Wallpaper: " + wallpaper + " downloaded!")
         r.incrbyfloat('job:' + task + ':progress', 75.0 / quantity)
 
         image_name = get_filename(wallpaper)
@@ -91,8 +94,23 @@ def download_wallpapers(r, task, image_dir, resolution, quantity):
             r.set('image:' + image_name + ':uuid', uuid)
 
         # Add the image to the list for the current resolution
-        print "Adding image to list: " + image_name
         r.set('image:' + uuid + ':' + resolution, wallpaper)
         r.sadd('image:' + resolution + ':uuids', uuid)
 
-    print "DONE!!!!!!!!!!!!!!!"
+
+def compress_wallpapers(r, task, output_dir, wallpapers):
+    """Compresses the wallpapers into a zip file and sets the path to download
+    the zipfile in the database.
+    """
+    logger = get_logger()
+    file = os.path.join(os.path.normpath(output_dir), generate_uuid() + '.zip')
+    logger.info('Job: ' + task + ' Creating compressed file: ' + file)
+
+    with ZipFile(file, 'w') as zip:
+        for wallpaper in wallpapers:
+            zip.write(wallpaper, arcname=os.path.basename(wallpaper))
+            r.incrbyfloat('job:' + task + ':progress', 24.0 / len(wallpapers))
+
+    logger.info('Job: ' + task + ' Compressed file: ' + file + ' Ready!')
+    r.setex('job:' + task + ':file', job_TTL, file)
+    r.incrbyfloat('job:' + task + ':progress', 2.0)
