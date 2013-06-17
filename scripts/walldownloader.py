@@ -23,6 +23,7 @@
 #
 ###############################################################################
 import os
+import subprocess
 import urllib2
 import re
 
@@ -118,15 +119,14 @@ class WallDownloader(object):
 
             # Check that the file hasn't already been downloaded
             if os.path.exists(os.path.join(os.path.normpath(self.directory), filename)):
-                print 'File already exists, skipping to the next file to download.'
+                #print 'File already exists, skipping to the next file to download.'
                 continue
             else:
                 # Download the picture to local directory
-                os.system('wget -P ' + self.directory + ' -nc -U "' + self.useragent + '" ' + download_url)
+                os.system('wget -P ' + self.directory + ' -nc -U "' + self.useragent + '" ' + download_url + ' &> /dev/null')
                 downloads += 1
-                print "# OF DOWNLOADS: " + str(downloads)
+                #print "# OF DOWNLOADS: " + str(downloads)
                 yield os.path.join(os.path.normpath(self.directory), filename)
-
 
     def get_wallpaper(self, resolution):
         """An internal method which is used to fetch wallpaper download URLs from
@@ -140,7 +140,7 @@ class WallDownloader(object):
         url = self._resolutions[resolution]
         page_count = 1
         while True:
-            print "CURRENT PAGE URL: " + url + "index" + str(page_count) + ".html"
+            #print "CURRENT PAGE URL: " + url + "index" + str(page_count) + ".html"
             data = self.opener.open(url + "index" + str(page_count) + ".html").read()
             currentpos = 0
 
@@ -152,7 +152,7 @@ class WallDownloader(object):
             if re.findall(r".+((<a\shref\=\"/wallpaper/\w+/)\w+\.jpg)", data):
                 m = re.findall(r".+((<a\shref\=\"/wallpaper/\w+/)\w+\.jpg)", data)
                 start = m[0][1]
-                print start
+                #print start
 
             # Each page of interfacelift contains a maximum of 10 images
             for n in xrange(0, 10):
@@ -163,16 +163,15 @@ class WallDownloader(object):
                     currentpos = index + 1
 
                     # Get the filename from href using regex
-                    print data[index:endofindex]
-                    print data[index+9:endofindex]
+                    #print data[index:endofindex]
+                    #print data[index+9:endofindex]
                     if re.match(r"^.+/(\w+\.jpg)", data[index:endofindex]):
                         n = re.match(r"^.+/(\w+\.jpg)", data[index:endofindex])
                         filename = n.group(1)
                         download_url = self.site_url + data[index+9:endofindex]
-                        print "File: " + filename
-                        print "URL: " + download_url
+                        #print "File: " + filename
+                        #print "URL: " + download_url
                         # Yield the filename and the download url
                         yield (filename, download_url)
 
             page_count += 1
-

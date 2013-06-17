@@ -40,7 +40,7 @@ max_processes = cpu_count() * 2
 
 # Process command line arguments
 if len(sys.argv) < 3 or sys.argv[1] == '--help':
-    sys.stderr.write("Usage: manager.py {image dir} {output dir} ({ax processes (optional)}\n")
+    sys.stderr.write("Usage: manager.py {image dir} {output dir} {max processes (optional)}\n")
     sys.stderr.write("Example: manager.py images/ files/ 16\n")
     sys.exit(2)
 else:
