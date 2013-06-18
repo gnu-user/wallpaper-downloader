@@ -24,6 +24,7 @@
 #
 ###############################################################################
 from multiprocessing import get_logger
+from wand.image import Image
 from walldownloader import *
 from util import *
 import logging
@@ -78,7 +79,9 @@ def prepare_download(task, image_dir, output_dir):
 
 def download_wallpapers(r, task, image_dir, resolution, quantity):
     """Downloads a number of wallpapers based on the resolution and quantity
-    and adds each new wallpaper to the Redis database.
+    and adds each new wallpaper to the Redis database. For any wallpapers that
+    are 1080p a low resolution version is created and the pair of images
+    is added to the list of background images.
     """
     logger = get_logger()
     wall = WallDownloader(image_dir)
@@ -97,6 +100,10 @@ def download_wallpapers(r, task, image_dir, resolution, quantity):
         r.set('image:' + uuid + ':' + resolution, wallpaper)
         r.sadd('image:' + resolution + ':uuids', uuid)
 
+        # Add 1080p images to list of background images
+        if resolution == '1920x1080':
+            create_background(r, task, uuid, image_dir, image_name)
+
 
 def compress_wallpapers(r, task, output_dir, wallpapers):
     """Compresses the wallpapers into a zip file and sets the path to download
@@ -114,3 +121,33 @@ def compress_wallpapers(r, task, output_dir, wallpapers):
     logger.info('Job: ' + task + ' Compressed file: ' + file + ' Ready!')
     r.setex('job:' + task + ':file', job_TTL, file)
     r.incrbyfloat('job:' + task + ':progress', 2.0)
+
+
+def create_background(r, task, uuid, image_dir, image_name):
+    """Creates a low resolution version of a 1080p wallpaper provided and saves
+    the matching pair of images to the list of background images that are
+    randomly displayed on the website.
+    """
+    logger = get_logger()
+
+    # Get the wallpaper file path
+    uuid = r.get('image:' + image_name + ':uuid')
+    file = r.get('image:' + uuid + ':1920x1080')
+
+    new_img_dir = os.path.join(os.path.normpath(image_dir), '800x480')
+    new_file = os.path.join(os.path.normpath(new_img_dir), image_name + '_800x480.jpg')
+
+    if not os.path.exists(new_img_dir):
+            os.makedirs(new_img_dir)
+
+    # Resize the image as 800x480 at 50% quality, save as new image
+    logger.info('Job: ' + task + ' UUID: ' + uuid + ', creating background: ' + new_file)
+    with Image(filename=file) as img:
+        with img.clone() as new_img:
+            new_img.compression_quality = 50
+            new_img.resize(800, 480)
+            new_img.save(filename=new_file)
+
+    # Add the new background to the list
+    r.set('image:' + uuid + ':800x480', new_file)
+    r.sadd('image:backgrounds:uuids', uuid)
