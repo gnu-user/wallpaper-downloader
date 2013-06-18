@@ -73,6 +73,7 @@ function getProgress(session_id, progress)
         }
         else if (progress >= 100) {
             /* The file is ready get the file to download */
+            $('#downloadModal').modal('hide');
             getDownload(session_id);
         }
 
