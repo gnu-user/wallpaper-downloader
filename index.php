@@ -59,8 +59,9 @@ if (isset($_POST['resolution']) && isset($_POST['quantity']) && isset($_POST['se
 /* User is loading the page, get a random background */
 else
 {
-    $lowres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:800x480');
-    $highres_img = $redis->get('OgmgwkrrRK2lXUpVrmsh8Q:1920x1080');
+    $uuid = $redis->sRandMember('image:backgrounds:uuids', 1)[0];
+    $lowres_img = $redis->get('image:' . $uuid . ':800x480');
+    $highres_img = $redis->get('image:' . $uuid . ':1920x1080');
 
      /* Display the header */
     include 'templates/header.php';
