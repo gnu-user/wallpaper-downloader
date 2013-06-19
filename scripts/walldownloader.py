@@ -36,10 +36,12 @@ class WallDownloader(object):
     """
     """A list of supported resolutions and corresponding download pages"""
     _resolutions = {
-        '2560x1600' : 'http://interfacelift.com/wallpaper/downloads/date/widescreen/2560x1600/',
+        '2880x1800': 'http://interfacelift.com/wallpaper/downloads/date/widescreen/2880x1800/',
+        '2560x1600': 'http://interfacelift.com/wallpaper/downloads/date/widescreen/2560x1600/',
         '2560x1440': 'http://interfacelift.com/wallpaper/downloads/date/widescreen/2560x1440/',
         '1920x1200': 'http://interfacelift.com/wallpaper/downloads/date/widescreen/1920x1200/',
         '1680x1050': 'http://interfacelift.com/wallpaper/downloads/date/widescreen/1680x1050/',
+        '1600x900' : 'http://interfacelift.com/wallpaper/downloads/date/widescreen/1600x900/',
         '1440x900' : 'http://interfacelift.com/wallpaper/downloads/date/widescreen/1440x900/',
         '1280x800' : 'http://interfacelift.com/wallpaper/downloads/date/widescreen/1280x800/',
         '1600x1200': 'http://interfacelift.com/wallpaper/downloads/date/fullscreen/1600x1200/',
@@ -54,7 +56,9 @@ class WallDownloader(object):
         '320x480'  : 'http://interfacelift.com/wallpaper/downloads/date/apple_devices/iphone,_3g,_3gs/',
         '320x240'  : 'http://interfacelift.com/wallpaper/downloads/date/apple_devices/ipod_touch/',
         '1366x768' : 'http://interfacelift.com/wallpaper/downloads/date/netbook/1366x768/',
-        '1280x800' : 'http://interfacelift.com/wallpaper/downloads/date/netbook/1280x800/',
+        '1280x800' : 'http://interfacelift.com/wallpaper/downloads/date/android/1280x800_tablet/',
+        '720x1280' : 'http://interfacelift.com/wallpaper/downloads/date/android/720x1280_phone/',
+        '480x800'  : 'http://interfacelift.com/wallpaper/downloads/date/android/480x800_phone/',
         '1024x600' : 'http://interfacelift.com/wallpaper/downloads/date/netbook/1024x600/',
         '800x480'  : 'http://interfacelift.com/wallpaper/downloads/date/netbook/800x480/',
         '2560x1024': 'http://interfacelift.com/wallpaper/downloads/date/2_screens/2560x1024/',
