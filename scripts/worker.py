@@ -89,7 +89,7 @@ def download_wallpapers(r, task, image_dir, resolution, quantity):
         logger.info("Wallpaper: " + wallpaper + " downloaded!")
         r.incrbyfloat('job:' + task + ':progress', 75.0 / quantity)
 
-        image_name = get_filename(wallpaper)
+        image_name = WallDownloader.get_filename(wallpaper)
         uuid = r.get('image:' + image_name + ':uuid')
 
         if not uuid:

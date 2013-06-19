@@ -88,6 +88,13 @@ class WallDownloader(object):
         """Returns the list of supported resolutions"""
         return self._resolutions
 
+    @classmethod
+    def get_filename(self, file):
+        """Gets the raw, unique part of the filename (without the resolution component)
+        in order to easily identify the same image but at different resolutions.
+        """
+    return re.search(r'/([^/]+)_\d+x\d+.*\.jpg', file).group(1)
+
     def downloads(self, resolution, quantity):
         """An iterator which returns the path and filename of each wallpaper downloaded,
         in the event that there are not enough wallpapers available to meet the quantity
